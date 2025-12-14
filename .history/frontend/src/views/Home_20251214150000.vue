@@ -4,7 +4,7 @@
     <div class="sidebar">
       <div class="sidebar-logo">
         <icon-robot class="logo-icon" />
-        <span class="logo-text">AI</span>
+        <span class="logo-text">LMQ</span>
       </div>
       <div class="sidebar-menu">
         <router-link to="/" class="menu-item" active-class="active" exact>
@@ -98,7 +98,7 @@
         <div class="welcome-icon">
           <icon-robot />
         </div>
-        <h1>欢迎使用AI健身教练</h1>
+        <h1>欢迎使用LMQ-AI健身教练</h1>
         <p>智能助手，让健身更轻松</p>
       </div>
 

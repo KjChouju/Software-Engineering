@@ -35,6 +35,30 @@ const routes = [
         }
     },
     {
+        path: '/data',
+        name: 'FitnessData',
+        component: () => import('../views/FitnessData.vue'),
+        meta: {
+            title: '健身数据 - AI健身教练'
+        }
+    },
+    {
+        path: '/knowledge',
+        name: 'FitnessKnowledge',
+        component: () => import('../views/FitnessKnowledge.vue'),
+        meta: {
+            title: '健身知识库 - AI健身教练'
+        }
+    },
+    {
+        path: '/ranking',
+        name: 'FitnessRanking',
+        component: () => import('../views/FitnessRanking.vue'),
+        meta: {
+            title: '健身排行榜 - AI健身教练'
+        }
+    },
+    {
         path: '/login',
         name: 'Login',
         component: () => import('../views/Login.vue'),
