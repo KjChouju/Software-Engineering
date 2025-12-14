@@ -453,30 +453,8 @@ volumes:
 - 编写完整的 JavaDoc 注释
 - 保持测试覆盖率 > 80%
 
-## 📄 许可证
-
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
-
-## 🙏 致谢
-
-- [Spring AI](https://spring.io/projects/spring-ai) - 强大的 AI 应用开发框架
-- [阿里云通义千问](https://dashscope.aliyun.com/) - 优秀的大语言模型服务
-- [Spring Boot](https://spring.io/projects/spring-boot) - 快速应用开发框架
-
-## 📞 联系我们
-
-- **作者**: LMQICU
-- **邮箱**: 2097489731@qq.com
-- **项目主页**: https://github.com/lmqvq/mq-ai-agent
-- **问题反馈**: https://github.com/lmqvq/mq-ai-agent/issues
-
 ---
 
 <div align="center">
 
-**⭐ 如果这个项目对你有帮助，请给我们一个 Star！⭐**
-
-Made with ❤️ by [LMQICU](https://github.com/lmqvq)
-
-</div>
 ```
