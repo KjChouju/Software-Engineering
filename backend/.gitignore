@@ -1,0 +1,50 @@
+### CUSTOM ###
+logs
+docs
+.augment
+application-prod-optimized.yml
+application-local.yml
+application-prod.yml
+forbidden-words.txt
+tmp
+mcp-servers.json
+README_排行榜功能.md
+WARP.md
+健身排行榜功能_部署和测试指南.md
+健身排行榜功能_项目完成总结.md
+健身排行榜功能需求文档_Redis版.md
+后端接口优化需求文档.md
+
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
