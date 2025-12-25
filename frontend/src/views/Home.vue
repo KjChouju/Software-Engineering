@@ -3,8 +3,8 @@
     <!-- 左侧导航栏 -->
     <div class="sidebar">
       <div class="sidebar-logo">
-        <icon-robot class="logo-icon" />
-        <span class="logo-text">AI</span>
+        <icon-trophy class="logo-icon" />
+        <span class="logo-text">FitPro</span>
       </div>
       <div class="sidebar-menu">
         <router-link to="/" class="menu-item" active-class="active" exact>
@@ -14,10 +14,6 @@
         <router-link to="/fitness" class="menu-item" active-class="active">
           <icon-trophy />
           <span>AI健身教练</span>
-        </router-link>
-        <router-link to="/agent" class="menu-item" active-class="active">
-          <icon-robot />
-          <span>AI超级智能体</span>
         </router-link>
         <router-link to="/profile" class="menu-item" active-class="active" v-if="isLoggedIn">
           <icon-user />
@@ -96,10 +92,24 @@
       
       <div class="welcome-section">
         <div class="welcome-icon">
-          <icon-robot />
+          <icon-trophy />
         </div>
-        <h1>欢迎使用AI健身教练</h1>
-        <p>智能助手，让健身更轻松</p>
+        <h1>开启您的健康之旅</h1>
+        <p class="welcome-subtitle">AI智能健身教练，为您量身定制专属训练方案</p>
+        <div class="welcome-features">
+          <div class="feature-tag">
+            <icon-fire />
+            <span>智能训练</span>
+          </div>
+          <div class="feature-tag">
+            <icon-bar-chart />
+            <span>数据分析</span>
+          </div>
+          <div class="feature-tag">
+            <icon-heart />
+            <span>健康管理</span>
+          </div>
+        </div>
       </div>
 
       <div class="apps-grid">
@@ -166,7 +176,7 @@ import { useRouter } from 'vue-router';
 import AppCard from '@/components/AppCard.vue';
 import {
   IconHome, IconUser, IconBarChart, IconTrophy,
-  IconFire, IconClockCircle, IconHeart, IconBook, IconEdit, IconPoweroff, IconRobot,
+  IconFire, IconClockCircle, IconHeart, IconBook, IconEdit, IconPoweroff,
   IconMoon, IconSun
 } from '@arco-design/web-vue/es/icon';
 import { Message } from '@arco-design/web-vue';
@@ -188,7 +198,6 @@ export default {
     IconBook,
     IconEdit,
     IconPoweroff,
-    IconRobot,
     IconMoon,
     IconSun
   },
@@ -212,42 +221,34 @@ export default {
       {
         id: 'fitness',
         title: 'AI健身教练',
-        description: '专业的健身教练，为您提供个性化的健身建议和计划',
+        description: '专业的健身教练，为您提供个性化的健身建议和训练计划',
         icon: 'icon-trophy',
         route: '/fitness',
-        bgColor: 'rgba(255, 235, 218, 0.5)'
+        bgColor: 'linear-gradient(135deg, rgba(255, 154, 139, 0.15) 0%, rgba(255, 206, 138, 0.15) 100%)'
       },
-      {
-        id: 'agent',
-        title: 'AI超级智能体',
-        description: '强大的智能助手，可以回答问题、提供建议、协助创作和分析信息',
-        icon: 'icon-robot',
-        route: '/agent',
-        bgColor: 'rgba(218, 243, 243, 0.5)'
-      },
-      // {
-      //   id: 'plans',
-      //   title: '个性化健身计划',
-      //   description: 'AI为您量身定制专业健身计划，科学训练，高效达成目标',
-      //   icon: 'icon-calendar',
-      //   route: '/plans',
-      //   bgColor: 'rgba(230, 247, 255, 0.5)'
-      // },
       {
         id: 'data',
         title: '健身数据中心',
-        description: '记录和追踪您的健身进展，让数据指导您的健身之路',
+        description: '智能记录和分析您的健身数据，让进步清晰可见',
         icon: 'icon-bar-chart',
         route: '/data',
-        bgColor: 'rgba(246, 255, 237, 0.5)'
+        bgColor: 'linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%)'
       },
       {
         id: 'knowledge',
         title: '健身知识库',
-        description: '专业的健身知识，科学的训练方法，助您成为健身达人',
+        description: '海量专业健身知识，科学训练方法助您成为达人',
         icon: 'icon-book',
         route: '/knowledge',
-        bgColor: 'rgba(255, 247, 230, 0.5)'
+        bgColor: 'linear-gradient(135deg, rgba(67, 206, 162, 0.15) 0%, rgba(24, 90, 157, 0.15) 100%)'
+      },
+      {
+        id: 'ranking',
+        title: '健身排行榜',
+        description: '与其他健身爱好者一较高下，激发您的运动潜能',
+        icon: 'icon-trophy',
+        route: '/ranking',
+        bgColor: 'linear-gradient(135deg, rgba(245, 87, 108, 0.15) 0%, rgba(255, 110, 127, 0.15) 100%)'
       }
     ];
 
@@ -882,38 +883,110 @@ export default {
   text-align: center;
   margin-bottom: 64px;
   animation: fadeIn 0.8s ease-in;
+  padding: 40px 20px;
+  background: linear-gradient(180deg, rgba(102, 126, 234, 0.03) 0%, transparent 100%);
+  border-radius: 24px;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
   
   .welcome-icon {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    margin-bottom: 28px;
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    margin-bottom: 32px;
+    box-shadow: 0 20px 50px rgba(102, 126, 234, 0.4),
+                0 0 0 8px rgba(102, 126, 234, 0.1);
     animation: float 3s ease-in-out infinite;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -15px;
+      border-radius: 50%;
+      border: 2px dashed rgba(102, 126, 234, 0.3);
+      animation: spin 20s linear infinite;
+    }
     
     :deep(svg) {
-      width: 50px;
-      height: 50px;
+      width: 55px;
+      height: 55px;
     }
   }
   
   h1 {
-    font-size: 38px;
+    font-size: 42px;
     font-weight: 800;
     margin-bottom: 16px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     letter-spacing: -0.5px;
+    animation: gradientShift 8s ease infinite;
+    background-size: 200% 200%;
   }
   
-  p {
+  .welcome-subtitle {
+    font-size: 18px;
+    color: #5a6c7d;
+    max-width: 500px;
+    margin: 0 auto 24px;
+    line-height: 1.6;
+    font-weight: 500;
+  }
+  
+  .welcome-features {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    
+    .feature-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: white;
+      border-radius: 50px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(102, 126, 234, 0.15);
+      transition: all 0.3s ease;
+      font-size: 14px;
+      font-weight: 600;
+      color: #667eea;
+      
+      :deep(svg) {
+        width: 16px;
+        height: 16px;
+      }
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+    }
+  }
+  
+  p:not(.welcome-subtitle) {
     font-size: 18px;
     color: #5a6c7d;
     max-width: 600px;
@@ -926,15 +999,18 @@ export default {
 .apps-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
+  gap: 28px;
   max-width: 1000px;
-  margin: 0 auto 48px;
+  margin: 0 auto 56px;
   animation: slideUp 0.6s ease-out;
   animation-fill-mode: both;
+  padding: 0 10px;
   
   .app-item {
     animation: scaleIn 0.5s ease-out;
     animation-fill-mode: both;
+    border-radius: 20px;
+    overflow: hidden;
     
     &:nth-child(1) {
       animation-delay: 0.1s;
@@ -959,6 +1035,10 @@ export default {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  padding: 40px 20px;
+  background: linear-gradient(180deg, transparent 0%, rgba(102, 126, 234, 0.02) 50%, transparent 100%);
+  border-radius: 24px;
+  position: relative;
 
   h2 {
     font-size: 28px;
@@ -970,6 +1050,19 @@ export default {
     margin: 0 0 32px 0;
     text-align: center;
     letter-spacing: -0.5px;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
   }
 
   .overview-cards {
@@ -1091,6 +1184,33 @@ export default {
   }
   50% {
     transform: translateY(-10px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
   }
 }
 

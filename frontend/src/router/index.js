@@ -19,14 +19,6 @@ const routes = [
         }
     },
     {
-        path: '/agent',
-        name: 'SuperAgent',
-        component: () => import('../views/SuperAgent.vue'),
-        meta: {
-            title: 'AI超级智能体'
-        }
-    },
-    {
         path: '/profile',
         name: 'UserProfile',
         component: () => import('../views/UserProfile.vue'),
