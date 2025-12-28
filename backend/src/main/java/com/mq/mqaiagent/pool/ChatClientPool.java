@@ -19,10 +19,6 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * ChatClient 对象池
  * 用于缓存和复用 ChatClient 实例，避免频繁创建对象造成的性能开销
- * 
- * @author MQQQ
- * @version v1.0
- * @since 2025/1/17
  */
 @Component
 @Slf4j
@@ -30,10 +26,10 @@ public class ChatClientPool {
 
     @Resource
     private ChatModel dashscopeChatModel;
-    
+
     @Resource
     private KeepReportMapper keepReportMapper;
-    
+
     @Resource
     private CacheService cacheService;
 
@@ -54,8 +50,8 @@ public class ChatClientPool {
     /**
      * 缓存配置
      */
-    private static final int MAX_CACHE_SIZE = 1000;           // 最大缓存数量
-    private static final long CACHE_EXPIRE_MINUTES = 60;     // 缓存过期时间（分钟）
+    private static final int MAX_CACHE_SIZE = 1000; // 最大缓存数量
+    private static final long CACHE_EXPIRE_MINUTES = 60; // 缓存过期时间（分钟）
     private static final long INACTIVE_THRESHOLD_MINUTES = 30; // 不活跃阈值（分钟）
 
     /**
@@ -72,7 +68,7 @@ public class ChatClientPool {
     /**
      * 获取或创建支持用户记忆的 KeepApp ChatClient
      * 
-     * @param userId 用户ID
+     * @param userId       用户ID
      * @param systemPrompt 系统提示词
      * @return ChatClient 实例
      */
@@ -95,7 +91,7 @@ public class ChatClientPool {
     /**
      * 获取或创建支持记忆的 MqManus ChatClient
      * 
-     * @param userId 用户ID
+     * @param userId       用户ID
      * @param systemPrompt 系统提示词
      * @return ChatClient 实例
      */
@@ -107,7 +103,7 @@ public class ChatClientPool {
     /**
      * 通用的获取或创建 ChatClient 方法
      * 
-     * @param cacheKey 缓存键
+     * @param cacheKey      缓存键
      * @param clientFactory ChatClient 工厂方法
      * @return ChatClient 实例
      */
@@ -143,8 +139,7 @@ public class ChatClientPool {
                 .defaultSystem(systemPrompt)
                 .defaultAdvisors(
                         new MessageChatMemoryAdvisor(chatMemory),
-                        new MyLoggerAdvisor()
-                )
+                        new MyLoggerAdvisor())
                 .build();
     }
 
@@ -158,8 +153,7 @@ public class ChatClientPool {
                 .defaultSystem(systemPrompt)
                 .defaultAdvisors(
                         new MessageChatMemoryAdvisor(chatMemory),
-                        new MyLoggerAdvisor()
-                )
+                        new MyLoggerAdvisor())
                 .build();
     }
 
@@ -182,18 +176,17 @@ public class ChatClientPool {
         return ChatClient.builder(dashscopeChatModel)
                 .defaultAdvisors(
                         new MessageChatMemoryAdvisor(chatMemory),
-                        new MyLoggerAdvisor()
-                )
+                        new MyLoggerAdvisor())
                 .build();
     }
 
     /**
      * 生成缓存键
      * 
-     * @param clientType 客户端类型（keepapp/mqmanus）
-     * @param userId 用户ID（可为null）
+     * @param clientType   客户端类型（keepapp/mqmanus）
+     * @param userId       用户ID（可为null）
      * @param systemPrompt 系统提示词
-     * @param withMemory 是否支持记忆
+     * @param withMemory   是否支持记忆
      * @return 缓存键
      */
     private String generateCacheKey(String clientType, Long userId, String systemPrompt, boolean withMemory) {
@@ -202,10 +195,10 @@ public class ChatClientPool {
         if (userId != null) {
             keyBuilder.append(":user:").append(userId);
         }
-        
+
         // 使用系统提示词的哈希值避免键过长
         keyBuilder.append(":prompt:").append(systemPrompt.hashCode());
-        
+
         if (withMemory) {
             keyBuilder.append(":memory");
         }
@@ -228,7 +221,7 @@ public class ChatClientPool {
         });
         int afterSize = clientCache.size();
         if (beforeSize != afterSize) {
-            log.info("ChatClient 缓存清理完成，清理前: {}, 清理后: {}, 清理数量: {}", 
+            log.info("ChatClient 缓存清理完成，清理前: {}, 清理后: {}, 清理数量: {}",
                     beforeSize, afterSize, beforeSize - afterSize);
         }
     }
@@ -242,8 +235,7 @@ public class ChatClientPool {
                 cacheMisses.get(),
                 totalCreated.get(),
                 clientCache.size(),
-                calculateHitRate()
-        );
+                calculateHitRate());
     }
 
     /**
@@ -280,20 +272,25 @@ public class ChatClientPool {
         private final ChatClient chatClient;
         private final LocalDateTime createdTime;
         private volatile LocalDateTime lastAccessedTime;
+
         public CachedChatClient(ChatClient chatClient) {
             this.chatClient = chatClient;
             this.createdTime = LocalDateTime.now();
             this.lastAccessedTime = LocalDateTime.now();
         }
+
         public ChatClient getChatClient() {
             return chatClient;
         }
+
         public void updateLastAccessed() {
             this.lastAccessedTime = LocalDateTime.now();
         }
+
         public boolean isExpired() {
             return LocalDateTime.now().isAfter(createdTime.plusMinutes(CACHE_EXPIRE_MINUTES));
         }
+
         public boolean isInactive() {
             return LocalDateTime.now().isAfter(lastAccessedTime.plusMinutes(INACTIVE_THRESHOLD_MINUTES));
         }
@@ -307,6 +304,6 @@ public class ChatClientPool {
             long cacheMisses,
             long totalCreated,
             int currentCacheSize,
-            double hitRate
-    ) {}
+            double hitRate) {
+    }
 }

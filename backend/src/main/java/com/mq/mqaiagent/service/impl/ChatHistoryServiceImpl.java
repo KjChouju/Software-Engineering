@@ -20,9 +20,6 @@ import java.util.stream.Collectors;
 
 /**
  * 聊天历史服务实现类
- * 
- * @author MQQQ
- * @create 2025-08-07
  */
 @Service
 @Slf4j
@@ -37,8 +34,8 @@ public class ChatHistoryServiceImpl implements ChatHistoryService {
             // 构建查询条件：根据用户ID查询，按更新时间倒序排列
             LambdaQueryWrapper<KeepReport> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(KeepReport::getUserId, userId)
-                        .eq(KeepReport::getIsDelete, 0)
-                        .orderByDesc(KeepReport::getUpdateTime);
+                    .eq(KeepReport::getIsDelete, 0)
+                    .orderByDesc(KeepReport::getUpdateTime);
 
             // 查询数据库
             List<KeepReport> keepReports = keepReportMapper.selectList(queryWrapper);
@@ -65,8 +62,8 @@ public class ChatHistoryServiceImpl implements ChatHistoryService {
             // 构建查询条件
             LambdaQueryWrapper<KeepReport> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(KeepReport::getUserId, userId)
-                        .eq(KeepReport::getChatId, chatId)
-                        .eq(KeepReport::getIsDelete, 0);
+                    .eq(KeepReport::getChatId, chatId)
+                    .eq(KeepReport::getIsDelete, 0);
 
             // 查询数据库
             KeepReport keepReport = keepReportMapper.selectOne(queryWrapper);
@@ -96,12 +93,12 @@ public class ChatHistoryServiceImpl implements ChatHistoryService {
             // 构建更新条件：逻辑删除
             LambdaUpdateWrapper<KeepReport> updateWrapper = new LambdaUpdateWrapper<>();
             updateWrapper.eq(KeepReport::getUserId, userId)
-                        .eq(KeepReport::getChatId, chatId)
-                        .set(KeepReport::getIsDelete, 1);
+                    .eq(KeepReport::getChatId, chatId)
+                    .set(KeepReport::getIsDelete, 1);
 
             // 执行逻辑删除
             int updatedRows = keepReportMapper.update(null, updateWrapper);
-            
+
             if (updatedRows > 0) {
                 log.info("成功删除对话记录，用户ID: {}, 对话ID: {}", userId, chatId);
                 return true;
@@ -124,18 +121,18 @@ public class ChatHistoryServiceImpl implements ChatHistoryService {
      */
     private List<ChatHistoryDetailDTO.ChatMessageDTO> parseMessages(String messagesJson) {
         List<ChatHistoryDetailDTO.ChatMessageDTO> messages = new ArrayList<>();
-        
+
         try {
             JSONArray jsonArray = JSON.parseArray(messagesJson);
-            
+
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String messageType = jsonObject.getString("messageType");
-                
+
                 // 处理消息内容
                 Object messageObj = jsonObject.get("message");
                 String messageContent;
-                
+
                 if (messageObj instanceof JSONObject) {
                     // 如果是JSON对象，转换为字符串
                     messageContent = messageObj.toString();
@@ -143,17 +140,17 @@ public class ChatHistoryServiceImpl implements ChatHistoryService {
                     // 否则直接使用字符串值
                     messageContent = jsonObject.getString("message");
                 }
-                
+
                 messages.add(ChatHistoryDetailDTO.ChatMessageDTO.builder()
                         .messageType(messageType)
                         .message(messageContent)
                         .build());
             }
-            
+
         } catch (Exception e) {
             log.error("解析消息JSON失败: {}", e.getMessage(), e);
         }
-        
+
         return messages;
     }
 }

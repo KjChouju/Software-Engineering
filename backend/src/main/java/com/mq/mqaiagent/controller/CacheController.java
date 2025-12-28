@@ -17,10 +17,6 @@ import java.util.Map;
 /**
  * 缓存管理控制器
  * 提供缓存监控、管理和统计功能
- * 
- * @author MQQQ
- * @version v1.0
- * @since 2025/8/25
  */
 @RestController
 @RequestMapping("/cache")

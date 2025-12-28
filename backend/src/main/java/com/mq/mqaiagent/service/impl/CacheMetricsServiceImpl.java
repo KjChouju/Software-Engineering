@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * @author MQ
  * @description 针对缓存性能监控操作的数据库操作Service实现
- * @createDate 2025-08-25 00:00:00
  */
 @Service
 @Slf4j
@@ -174,7 +172,8 @@ public class CacheMetricsServiceImpl implements CacheMetricsService {
             }
 
             String metricsKey = METRICS_PREFIX + "performance_report";
-            CacheMetricsService.CachePerformanceReport report = cacheService.get(metricsKey, CacheMetricsService.CachePerformanceReport.class);
+            CacheMetricsService.CachePerformanceReport report = cacheService.get(metricsKey,
+                    CacheMetricsService.CachePerformanceReport.class);
 
             if (report != null) {
                 log.debug("从Redis加载了持久化的缓存性能指标");

@@ -18,9 +18,6 @@ import java.util.List;
 
 /**
  * 聊天历史接口
- * 
- * @author MQQQ
- * @create 2025-08-07
  */
 @RestController
 @RequestMapping("/chat/history")
@@ -44,12 +41,12 @@ public class ChatHistoryController {
         try {
             // 获取当前登录用户
             User currentUser = userService.getLoginUser(request);
-            
+
             // 获取历史对话列表
             List<ChatHistoryListDTO> historyList = chatHistoryService.getChatHistoryList(currentUser.getId());
-            
+
             return ResultUtils.success(historyList);
-            
+
         } catch (BusinessException e) {
             log.warn("获取历史对话列表失败: {}", e.getMessage());
             return ResultUtils.error(e.getCode(), e.getMessage());
@@ -67,26 +64,26 @@ public class ChatHistoryController {
      * @return 对话详情
      */
     @GetMapping("/detail")
-    public BaseResponse<ChatHistoryDetailDTO> getChatHistoryDetail(@RequestParam String chatId, 
-                                                                   HttpServletRequest request) {
+    public BaseResponse<ChatHistoryDetailDTO> getChatHistoryDetail(@RequestParam String chatId,
+            HttpServletRequest request) {
         try {
             // 参数校验
             if (chatId == null || chatId.trim().isEmpty()) {
                 return ResultUtils.error(ErrorCode.PARAMS_ERROR, "对话ID不能为空");
             }
-            
+
             // 获取当前登录用户
             User currentUser = userService.getLoginUser(request);
-            
+
             // 获取对话详情
             ChatHistoryDetailDTO historyDetail = chatHistoryService.getChatHistoryDetail(currentUser.getId(), chatId);
-            
+
             if (historyDetail == null) {
                 return ResultUtils.error(ErrorCode.NOT_FOUND_ERROR, "对话记录不存在");
             }
-            
+
             return ResultUtils.success(historyDetail);
-            
+
         } catch (BusinessException e) {
             log.warn("获取对话详情失败: {}", e.getMessage());
             return ResultUtils.error(e.getCode(), e.getMessage());
@@ -104,26 +101,26 @@ public class ChatHistoryController {
      * @return 是否删除成功
      */
     @DeleteMapping("/delete")
-    public BaseResponse<Boolean> deleteChatHistory(@RequestParam String chatId, 
-                                                   HttpServletRequest request) {
+    public BaseResponse<Boolean> deleteChatHistory(@RequestParam String chatId,
+            HttpServletRequest request) {
         try {
             // 参数校验
             if (chatId == null || chatId.trim().isEmpty()) {
                 return ResultUtils.error(ErrorCode.PARAMS_ERROR, "对话ID不能为空");
             }
-            
+
             // 获取当前登录用户
             User currentUser = userService.getLoginUser(request);
-            
+
             // 删除对话
             boolean success = chatHistoryService.deleteChatHistory(currentUser.getId(), chatId);
-            
+
             if (success) {
                 return ResultUtils.success(true);
             } else {
                 return ResultUtils.error(ErrorCode.OPERATION_ERROR, "删除失败，对话记录不存在");
             }
-            
+
         } catch (BusinessException e) {
             log.warn("删除对话失败: {}", e.getMessage());
             return ResultUtils.error(e.getCode(), e.getMessage());

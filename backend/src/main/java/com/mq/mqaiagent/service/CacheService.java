@@ -1,9 +1,7 @@
 package com.mq.mqaiagent.service;
 
 /**
- * @author MQ
  * @description 针对缓存操作的数据库操作Service
- * @createDate 2025-01-25 00:00:00
  */
 public interface CacheService {
 

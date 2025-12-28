@@ -9,9 +9,6 @@ import java.util.List;
 
 /**
  * 聊天历史详情DTO
- * 
- * @author MQQQ
- * @create 2025-08-07
  */
 @Data
 @Builder
@@ -37,12 +34,12 @@ public class ChatHistoryDetailDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ChatMessageDTO {
-        
+
         /**
          * 消息类型：USER/ASSISTANT
          */
         private String messageType;
-        
+
         /**
          * 消息内容
          */

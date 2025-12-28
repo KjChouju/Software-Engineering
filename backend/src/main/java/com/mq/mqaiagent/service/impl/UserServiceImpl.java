@@ -39,20 +39,19 @@ import java.util.stream.Collectors;
 import static com.mq.mqaiagent.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
-* @author MQ
-* @description 针对表【user(用户)】的数据库操作Service实现
-* @createDate 2025-07-28 21:26:31
-*/
+ * @description 针对表【user(用户)】的数据库操作Service实现
+ */
 @Service
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
-    implements UserService{
+        implements UserService {
 
     @Value("${cos.client.bucket-url:}")
     private String bucketUrl;
 
     @Resource
     private CosManager cosManager;
+
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword) {
         // 1. 校验
@@ -84,8 +83,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             user.setUserPassword(encryptPassword);
             int[] numbers = NumberUtil.generateRandomNumber(1, 1000, 1);
             user.setUserName(StrUtil.format("user_{}", numbers[0]));
-            //user.setUserName("无名");
-            //user.setUserName(StrUtil.format("无名{}", NumberUtil.generateRandomNumber(1,1000,1)));
+            // user.setUserName("无名");
+            // user.setUserName(StrUtil.format("无名{}",
+            // NumberUtil.generateRandomNumber(1,1000,1)));
             user.setUserProfile("这位朋友幽默风趣");
             user.setUserAvatar("https://s2.loli.net/2025/03/30/lomyT1DdqspgBxN.jpg");
             user.setUserRole(UserRoleEnum.USER.getValue());
@@ -311,7 +311,3 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
 }
-
-
-
-
