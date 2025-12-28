@@ -9,9 +9,6 @@ import java.util.Date;
 
 /**
  * 聊天历史列表DTO
- * 
- * @author MQQQ
- * @create 2025-08-07
  */
 @Data
 @Builder

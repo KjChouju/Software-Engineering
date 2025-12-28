@@ -7,9 +7,6 @@ import java.util.List;
 
 /**
  * 聊天历史服务接口
- * 
- * @author MQQQ
- * @create 2025-08-07
  */
 public interface ChatHistoryService {
 

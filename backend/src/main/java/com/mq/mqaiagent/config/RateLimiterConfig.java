@@ -14,13 +14,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 /**
  * 限流配置类
  * 用于控制高并发场景下的请求流量
- * 
- * @author MQQQ
- * @version v1.0
- * @since 2025/1/17
  */
 @Configuration
-//@Profile({"prod", "prod-optimized"})
+// @Profile({"prod", "prod-optimized"})
 public class RateLimiterConfig {
 
     /**
@@ -57,13 +53,13 @@ public class RateLimiterConfig {
     @Bean(name = "aiTaskExecutor")
     public ThreadPoolExecutor aiTaskExecutor() {
         return new ThreadPoolExecutor(
-                10,                      // 核心线程数
-                50,                      // 最大线程数
-                60L,                     // 空闲线程存活时间
-                TimeUnit.SECONDS,        // 时间单位
-                new ArrayBlockingQueue<>(200),  // 任务队列
+                10, // 核心线程数
+                50, // 最大线程数
+                60L, // 空闲线程存活时间
+                TimeUnit.SECONDS, // 时间单位
+                new ArrayBlockingQueue<>(200), // 任务队列
                 Executors.defaultThreadFactory(),
-                new ThreadPoolExecutor.CallerRunsPolicy()  // 拒绝策略
+                new ThreadPoolExecutor.CallerRunsPolicy() // 拒绝策略
         );
     }
 
@@ -82,10 +78,10 @@ public class RateLimiterConfig {
     public static class UserRateLimiterManager {
         // 存储每个用户的限流器
         private final ConcurrentHashMap<Long, RateLimiter> userRateLimiters = new ConcurrentHashMap<>();
-        
+
         // 每个用户每秒允许的请求数
         private static final double USER_RATE_LIMIT = 5.0;
-        
+
         /**
          * 获取或创建用户限流器
          * 
@@ -93,23 +89,23 @@ public class RateLimiterConfig {
          * @return 用户对应的限流器
          */
         public RateLimiter getRateLimiter(Long userId) {
-            return userRateLimiters.computeIfAbsent(userId, 
-                k -> RateLimiter.create(USER_RATE_LIMIT));
+            return userRateLimiters.computeIfAbsent(userId,
+                    k -> RateLimiter.create(USER_RATE_LIMIT));
         }
-        
+
         /**
          * 尝试获取令牌
          * 
-         * @param userId 用户ID
+         * @param userId  用户ID
          * @param timeout 超时时间
-         * @param unit 时间单位
+         * @param unit    时间单位
          * @return 是否获取成功
          */
         public boolean tryAcquire(Long userId, long timeout, TimeUnit unit) {
             RateLimiter limiter = getRateLimiter(userId);
             return limiter.tryAcquire(timeout, unit);
         }
-        
+
         /**
          * 清理不活跃用户的限流器
          * 建议定期调用以释放内存

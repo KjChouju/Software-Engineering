@@ -11,10 +11,6 @@ import java.util.List;
 /**
  * 带缓存的数据库对话记忆实现
  * 继承DatabaseChatMemory，增加Redis缓存层，实现双层缓存策略
- * 
- * @author MQQQ
- * @version v1.0
- * @since 2025/8/25
  */
 @Slf4j
 public class CachedDatabaseChatMemory extends DatabaseChatMemory implements ChatMemory {

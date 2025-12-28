@@ -9,9 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author MQ
  * @description 针对文本相似度计算的数据库操作Service实现
- * @createDate 2025-08-25 00:00:00
  */
 @Service
 @Slf4j
@@ -49,10 +47,10 @@ public class TextSimilarityServiceImpl implements TextSimilarityService {
             // 3. 计算余弦相似度
             return computeCosineSimilarity(vector1, vector2);
         } catch (Exception e) {
-            log.error("计算文本相似度失败: text1={}, text2={}, error={}", 
-                     text1.substring(0, Math.min(50, text1.length())), 
-                     text2.substring(0, Math.min(50, text2.length())), 
-                     e.getMessage(), e);
+            log.error("计算文本相似度失败: text1={}, text2={}, error={}",
+                    text1.substring(0, Math.min(50, text1.length())),
+                    text2.substring(0, Math.min(50, text2.length())),
+                    e.getMessage(), e);
             return 0.0;
         }
     }
@@ -61,10 +59,10 @@ public class TextSimilarityServiceImpl implements TextSimilarityService {
     public boolean isSimilar(String text1, String text2) {
         double similarity = calculateCosineSimilarity(text1, text2);
         boolean result = similarity >= SIMILARITY_THRESHOLD;
-        
-        log.debug("文本相似度计算: similarity={}, threshold={}, result={}", 
-                 similarity, SIMILARITY_THRESHOLD, result);
-        
+
+        log.debug("文本相似度计算: similarity={}, threshold={}, result={}",
+                similarity, SIMILARITY_THRESHOLD, result);
+
         return result;
     }
 
@@ -73,7 +71,7 @@ public class TextSimilarityServiceImpl implements TextSimilarityService {
         if (StrUtil.isBlank(text)) {
             return "empty";
         }
-        
+
         // 预处理文本后计算哈希
         String processedText = preprocessText(text);
         return String.valueOf(processedText.hashCode());
@@ -85,13 +83,15 @@ public class TextSimilarityServiceImpl implements TextSimilarityService {
     }
 
     @Override
-    public List<TextSimilarityService.SimilarityResult> calculateSimilarities(String targetText, List<String> candidates) {
+    public List<TextSimilarityService.SimilarityResult> calculateSimilarities(String targetText,
+            List<String> candidates) {
         if (StrUtil.isBlank(targetText) || candidates == null || candidates.isEmpty()) {
             return Collections.emptyList();
         }
 
         return candidates.stream()
-                .map(candidate -> new TextSimilarityService.SimilarityResult(candidate, calculateCosineSimilarity(targetText, candidate)))
+                .map(candidate -> new TextSimilarityService.SimilarityResult(candidate,
+                        calculateCosineSimilarity(targetText, candidate)))
                 .filter(result -> result.getSimilarity() > 0.0)
                 .sorted((r1, r2) -> Double.compare(r2.getSimilarity(), r1.getSimilarity()))
                 .collect(Collectors.toList());
@@ -128,13 +128,13 @@ public class TextSimilarityServiceImpl implements TextSimilarityService {
      */
     private Map<String, Integer> buildWordFrequencyVector(String text) {
         Map<String, Integer> vector = new HashMap<>();
-        
+
         // 使用字符级别的n-gram（这里使用2-gram）
         for (int i = 0; i < text.length() - 1; i++) {
             String gram = text.substring(i, i + 2);
             vector.merge(gram, 1, Integer::sum);
         }
-        
+
         // 如果文本太短，也添加单字符
         if (text.length() <= 3) {
             for (char c : text.toCharArray()) {
@@ -142,7 +142,7 @@ public class TextSimilarityServiceImpl implements TextSimilarityService {
                 vector.merge(singleChar, 1, Integer::sum);
             }
         }
-        
+
         return vector;
     }
 

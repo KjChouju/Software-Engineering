@@ -12,10 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 /**
-* @author MQ
-* @description 针对表【user(用户)】的数据库操作Service
-* @createDate 2025-07-28 21:26:32
-*/
+ * @description 针对表【user(用户)】的数据库操作Service
+ */
 public interface UserService extends IService<User> {
 
     /**

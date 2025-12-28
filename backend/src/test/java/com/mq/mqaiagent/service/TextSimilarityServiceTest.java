@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,10 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 文本相似度服务测试类
- * 
- * @author MQQQ
- * @version v1.0
- * @since 2025/1/25
  */
 @SpringBootTest
 @ActiveProfiles("test")
@@ -111,19 +106,19 @@ class TextSimilarityServiceTest {
         // 准备测试数据
         String targetText = "我想增肌，请给我建议";
         List<String> candidates = Arrays.asList(
-                "我想增肌，请给我一些建议",  // 高相似度
-                "如何进行力量训练",         // 中等相似度
-                "今天天气怎么样",           // 低相似度
-                "我想减脂，请给我建议"      // 中等相似度
+                "我想增肌，请给我一些建议", // 高相似度
+                "如何进行力量训练", // 中等相似度
+                "今天天气怎么样", // 低相似度
+                "我想减脂，请给我建议" // 中等相似度
         );
 
         // 执行测试
-        List<TextSimilarityService.SimilarityResult> results = 
-                textSimilarityService.calculateSimilarities(targetText, candidates);
+        List<TextSimilarityService.SimilarityResult> results = textSimilarityService.calculateSimilarities(targetText,
+                candidates);
 
         // 验证结果
         assertFalse(results.isEmpty());
-        
+
         // 结果应该按相似度降序排列
         for (int i = 0; i < results.size() - 1; i++) {
             assertTrue(results.get(i).getSimilarity() >= results.get(i + 1).getSimilarity());
@@ -141,10 +136,9 @@ class TextSimilarityServiceTest {
         List<String> candidates = Arrays.asList(
                 "", // 0 相似度
                 "X", // 很低相似度
-                "我想增肌，请给我一些建议"
-        );
-        List<TextSimilarityService.SimilarityResult> results =
-                textSimilarityService.calculateSimilarities(targetText, candidates);
+                "我想增肌，请给我一些建议");
+        List<TextSimilarityService.SimilarityResult> results = textSimilarityService.calculateSimilarities(targetText,
+                candidates);
         assertFalse(results.isEmpty());
         for (TextSimilarityService.SimilarityResult r : results) {
             assertTrue(r.getSimilarity() > 0.0);
@@ -154,16 +148,15 @@ class TextSimilarityServiceTest {
     @Test
     void testCalculateSimilaritiesWithEmptyInput() {
         // 测试空输入
-        List<TextSimilarityService.SimilarityResult> results1 = 
-                textSimilarityService.calculateSimilarities("", Arrays.asList("test"));
+        List<TextSimilarityService.SimilarityResult> results1 = textSimilarityService.calculateSimilarities("",
+                Arrays.asList("test"));
         assertTrue(results1.isEmpty());
 
-        List<TextSimilarityService.SimilarityResult> results2 = 
-                textSimilarityService.calculateSimilarities("test", Arrays.asList());
+        List<TextSimilarityService.SimilarityResult> results2 = textSimilarityService.calculateSimilarities("test",
+                Arrays.asList());
         assertTrue(results2.isEmpty());
 
-        List<TextSimilarityService.SimilarityResult> results3 = 
-                textSimilarityService.calculateSimilarities(null, null);
+        List<TextSimilarityService.SimilarityResult> results3 = textSimilarityService.calculateSimilarities(null, null);
         assertTrue(results3.isEmpty());
     }
 
@@ -172,9 +165,8 @@ class TextSimilarityServiceTest {
         // 测试SimilarityResult类
         String text = "测试文本";
         double similarity = 0.85;
-        
-        TextSimilarityService.SimilarityResult result = 
-                new TextSimilarityService.SimilarityResult(text, similarity);
+
+        TextSimilarityService.SimilarityResult result = new TextSimilarityService.SimilarityResult(text, similarity);
 
         assertEquals(text, result.getText());
         assertEquals(similarity, result.getSimilarity(), 0.001);
@@ -192,9 +184,9 @@ class TextSimilarityServiceTest {
         // 测试长文本的toString方法
         String longText = "这是一个非常长的文本，用来测试toString方法是否会正确截断文本内容，确保输出的可读性";
         double similarity = 0.75;
-        
-        TextSimilarityService.SimilarityResult result = 
-                new TextSimilarityService.SimilarityResult(longText, similarity);
+
+        TextSimilarityService.SimilarityResult result = new TextSimilarityService.SimilarityResult(longText,
+                similarity);
 
         String toString = result.toString();
         assertTrue(toString.contains("..."));

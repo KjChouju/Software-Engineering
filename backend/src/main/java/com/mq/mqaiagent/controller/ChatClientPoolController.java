@@ -12,10 +12,6 @@ import org.springframework.web.bind.annotation.*;
 /**
  * ChatClient 对象池监控控制器
  * 用于监控和管理 ChatClient 对象池的性能
- * 
- * @author MQQQ
- * @version v1.0
- * @since 2025/1/17
  */
 @RestController
 @RequestMapping("/pool")
@@ -35,7 +31,7 @@ public class ChatClientPoolController {
         try {
             ChatClientPool.CacheStats stats = chatClientPool.getCacheStats();
             log.info("ChatClient对象池统计信息: 缓存命中: {}, 缓存未命中: {}, 命中率: {:.2f}%, 当前缓存大小: {}, 总创建数量: {}",
-                    stats.cacheHits(), stats.cacheMisses(), stats.hitRate() * 100, 
+                    stats.cacheHits(), stats.cacheMisses(), stats.hitRate() * 100,
                     stats.currentCacheSize(), stats.totalCreated());
             return ResultUtils.success(stats);
         } catch (Exception e) {
@@ -57,7 +53,7 @@ public class ChatClientPoolController {
             chatClientPool.cleanupExpiredClients();
             ChatClientPool.CacheStats afterStats = chatClientPool.getCacheStats();
             int cleanedCount = beforeStats.currentCacheSize() - afterStats.currentCacheSize();
-            String message = String.format("清理完成，清理前缓存大小: %d, 清理后缓存大小: %d, 清理数量: %d", 
+            String message = String.format("清理完成，清理前缓存大小: %d, 清理后缓存大小: %d, 清理数量: %d",
                     beforeStats.currentCacheSize(), afterStats.currentCacheSize(), cleanedCount);
             log.info("手动清理ChatClient对象池: {}", message);
             return ResultUtils.success(message);
@@ -112,8 +108,7 @@ public class ChatClientPoolController {
                     objectReuseRate,
                     totalRequests,
                     performanceLevel,
-                    generateRecommendations(hitRate, stats.currentCacheSize())
-            );
+                    generateRecommendations(hitRate, stats.currentCacheSize()));
             return ResultUtils.success(report);
         } catch (Exception e) {
             log.error("获取ChatClient对象池性能报告失败", e);
@@ -167,6 +162,6 @@ public class ChatClientPoolController {
             double objectReuseRate,
             long totalRequests,
             String performanceLevel,
-            String recommendations
-    ) {}
+            String recommendations) {
+    }
 }

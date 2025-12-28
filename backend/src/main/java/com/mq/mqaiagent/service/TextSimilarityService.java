@@ -3,9 +3,7 @@ package com.mq.mqaiagent.service;
 import java.util.List;
 
 /**
- * @author MQ
  * @description 针对文本相似度计算的数据库操作Service
- * @createDate 2025-08-25 00:00:00
  */
 public interface TextSimilarityService {
 
